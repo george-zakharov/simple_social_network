@@ -18,6 +18,7 @@ from django.contrib.auth import authenticate, login, logout
 # ]
 
 def login_page(request):
+    page = 'login'
     if request.user.is_authenticated:
         return redirect('home')
 
@@ -37,12 +38,16 @@ def login_page(request):
         else:
             messages.error(request, 'Username or password does not exist')
 
-    context = {}
+    context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+def register_page(request):
+    page = 'register'
+    return render(request, 'base/login_register.html')
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') is not None else ''
